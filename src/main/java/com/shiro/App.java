@@ -1,6 +1,7 @@
 package com.shiro;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
@@ -19,13 +20,16 @@ public class App {
         Subject subject = SecurityUtils.getSubject();
         //创建用户名,密码身份验证 Token
         //外面"用户"传进来的,而shiro.ini中的用户名密码相当于数据库获取的
-        UsernamePasswordToken token = new UsernamePasswordToken("tom", "111");
-        //执行登录操作
-        subject.login(token);
-        //通过subject来判断用户是否通过验证
-        if (subject.isAuthenticated()) {
-            System.out.println("登录成功");
-        } else {
+        UsernamePasswordToken token = new UsernamePasswordToken("tom", "1111");
+        try {
+            //执行登录操作
+            subject.login(token);
+            //通过subject来判断用户是否通过验证
+            if (subject.isAuthenticated()) {
+                System.out.println("登录成功");
+            }
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
             System.out.println("登录失败");
         }
     }
