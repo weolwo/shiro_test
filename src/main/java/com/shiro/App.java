@@ -20,7 +20,7 @@ public class App {
         Subject subject = SecurityUtils.getSubject();
         //创建用户名,密码身份验证 Token
         //外面"用户"传进来的,而shiro.ini中的用户名密码相当于数据库获取的
-        UsernamePasswordToken token = new UsernamePasswordToken("tom", "1111");
+        UsernamePasswordToken token = new UsernamePasswordToken("Tom", "123456");
         try {
             //执行登录操作
             subject.login(token);
@@ -32,5 +32,7 @@ public class App {
             e.printStackTrace();
             System.out.println("登录失败");
         }
+        //测试授权
+        System.out.println(subject.isPermitted("user:delete"));
     }
 }
